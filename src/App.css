@@ -1,0 +1,34 @@
+.site-layout-content {
+  background: #fff;
+  padding: 24px 5px 24px 5px;
+  min-height: 280px;
+}
+#components-layout-demo-top .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+
+.ant-table tbody > tr > td,
+.ant-table tfoot > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table thead > tr > th {
+  padding: 8px;
+}
+
+/* .ant-table tfoot,
+.ant-table tfoot th,
+.ant-table tfoot td {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background: #666;
+  color: #fff;
+  z-index: 4;
+}
+
+tfoot th:first-child {
+  z-index: 5;
+} */
