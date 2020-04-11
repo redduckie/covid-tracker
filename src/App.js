@@ -3,7 +3,7 @@ import "./App.css";
 import LayoutMain from "./components/layout/LayoutMain";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import "antd/dist/antd.min.css";
+// import "antd/dist/antd.min.css";
 
 function App() {
   return (

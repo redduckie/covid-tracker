@@ -39,7 +39,7 @@ const CountryStats = props => {
       <Row>
         {/* <Tabs defaultActiveKey="1" onChange={() => updateCases()}>
           <TabPane tab="Countries" key="1"> */}
-        <Col xs={24} sm={24} md={16} lg={14} xl={12} xxl={12}>
+        <Col xs={24} sm={24} md={24} lg={14} xl={12} xxl={12}>
           {countryCases.length > 0 && (
             <TableInput
               columns={countryColumns}
