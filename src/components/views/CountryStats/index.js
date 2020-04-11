@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { get } from "../../../apis/api";
+import { get, countryTimeLineApi } from "../../../apis/api";
 import _ from "lodash";
 import TableInput from "../../inputs/TableInput";
-import { Tabs, Row, Col } from "antd";
+import { Row, Col } from "antd";
 import { countryColumns, countrySummary } from "./tableProps";
+import CountryGraphCard from "./countryGraphCard";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
-const { TabPane } = Tabs;
 const CountryStats = props => {
-  const [countryCases, setCountryCases] = useState([]);
-
+  const [allCases, setAllCases] = useState([]);
+  const [countryTimeLine, setCountryTimeLine] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
   useEffect(() => {
     updateCases();
   }, []);
@@ -25,34 +27,56 @@ const CountryStats = props => {
           deaths: r.deaths,
           newDeath: r.todayDeaths,
           tests: r.tests,
-          flag: r.countryInfo.flag
+          flag: r.countryInfo.flag,
+          iso2: r.countryInfo.iso2
         };
       });
-      setCountryCases(data);
+      setAllCases(data);
     });
   }
-  ///TODO: add a nother card on the right side and a link to
-  //grid and when clicked on additional country info with
-  //graphs will show. in a card.
+
+  const countryTimeLineConfirmed = (country) => {
+    // const data = countryTimeLineApi(countryIso2, "confirmed").then(res=> {
+    //   console.log(res);
+    // });
+    const alldata = [];
+    const confirmed = countryTimeLineApi(country, "confirmed").then(res => {
+      _.map(res, d => {
+        {
+          alldata.push({ cases: d.Cases, status: d.Status, date: d.Date })
+        }
+      });
+    });
+    console.log(alldata);
+  }
+
+  const rowClick = (e) => {
+    const selectedCountry = e.target.text;
+    const countryIso2 = allCases.find(f => f.country === selectedCountry).iso2
+    setSelectedCountry(selectedCountry);
+
+    countryTimeLineConfirmed(countryIso2)
+  }
+
   return (
     <div>
       <Row>
-        {/* <Tabs defaultActiveKey="1" onChange={() => updateCases()}>
-          <TabPane tab="Countries" key="1"> */}
-        <Col xs={24} sm={24} md={24} lg={14} xl={12} xxl={12}>
-          {countryCases.length > 0 && (
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          {allCases.length > 0 && (
             <TableInput
-              columns={countryColumns}
+              columns={countryColumns(rowClick)}
               rowKey={"country"}
-              data={countryCases}
+              data={allCases}
               summary={countrySummary}
               pagination={false}
               size="small"
             />
           )}
-          {/* </TabPane>
-        </Tabs> */}
         </Col>
+        {selectedCountry != "" &&
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} xl={12}>
+            <CountryGraphCard title={selectedCountry} />
+          </Col>}
       </Row>
     </div>
   );

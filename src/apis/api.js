@@ -35,6 +35,16 @@ export async function mapApi() {
   return data;
 }
 
-export async function CountryTimeLine() {
-  const url = ""
+export async function countryTimeLineApiAll() {
+  const url = `https://api.covid19api.com/all`
+  const result = await axios.get(url);
+  const {data} = result;
+  return data;
+}
+
+export async function countryTimeLineApi(country, status) {
+  const url = `https://api.covid19api.com/country/${country}/status/${status}/live`
+  const result = await axios.get(url);
+  const {data} = result;
+  return data;
 }

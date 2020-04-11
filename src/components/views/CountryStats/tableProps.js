@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Typography } from "antd";
 
 const { Text } = Typography;
-export const countryColumns = [
+export const countryColumns = onClick => [
   {
     title: "Country",
     dataIndex: "country",
@@ -17,7 +17,7 @@ export const countryColumns = [
             src={record.flag}
             alt="flag"
           />{" "}
-          {text}
+          <a onClick = {(e)=> onClick(e)}>{text}</a>
         </span>
       );
     }
