@@ -5,6 +5,10 @@ module.exports = override(
     libraryName: "antd",
     libraryDirectory: "es",
     style: true
+  }),fixBabelImports("import", {
+    libraryName: "antd-mobile",
+    libraryDirectory: "es",
+    style: true
   }),
   addLessLoader({
     javascriptEnabled: true,

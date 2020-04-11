@@ -43,6 +43,7 @@ const CountryStats = props => {
           {countryCases.length > 0 && (
             <TableInput
               columns={countryColumns}
+              rowKey={"country"}
               data={countryCases}
               summary={countrySummary}
               pagination={false}

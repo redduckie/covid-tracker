@@ -34,3 +34,7 @@ export async function mapApi() {
   const { data = [] } = result;
   return data;
 }
+
+export async function CountryTimeLine() {
+  const url = ""
+}
