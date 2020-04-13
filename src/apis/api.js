@@ -34,6 +34,7 @@ async function convertToJson(csvString) {
     .then(csvRow => {
       return _.map(csvRow, r => {
         return {
+          key: r.Country_Region + r.reportDate,
           country: r.Country_Region,
           confirmed: parseInt(r.Confirmed),
           deaths: parseInt(r.Deaths),

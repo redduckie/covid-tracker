@@ -39,10 +39,61 @@ const CountryStats = props => {
       setAllCases(data);
     });
   }
+  /* const ans = _(data)
+var selectedVehicles = _.filter(response.vehicleTypes, 'selected');
+Now that you have the selectedVehicles array, you can use your original code for grouping by the makeCode.
+
+selectedVehicles = _.groupBy(selectedVehicles, function(item) {
+  return item.makeCode;
+});
+This returns an object, so we will need to iterate through those keys, and perform our second groupBy
+
+_.forEach(selectedVehicles, function(value, key) {
+  selectedVehicles[key] = _.groupBy(selectedVehicles[key], function(item) {
+    return item.modelCode;
+  });
+});
+From this you will have an object of the form. I'll leave it to you to get the count from each array.
+
+{ 'Make-A': { 'Model-a': [ ... ] },
+  'Make-B': { 'Model-c': [ ... ] },
+  'Make-C': { 'Model-b': [ ..., ... ] } }
+
+  .map((platform, id) => ({
+    platformId: id,
+    payout: _.sumBy(platform, 'payout'),
+    numOfPeople: _.sumBy(platform, 'numOfPeople')
+  }))
+  .value()
+
+  */
 
   const getTimeLineData = async country => {
     const data = await countryTimeLineApiJH();
-    const filtered = _.filter(data, f => f.iso3 === country);
+
+    const test = _(data)
+      .filter(f => f.iso3 === country)
+      .map(d => ({
+        confirmed: _.sumBy(d, "confirmed")
+      }));
+
+    const b = test.value();
+
+    const filtered = _(data)
+      .filter(f => f.iso3 === country)
+      .groupBy("reportDate")
+      .map((data, date) => ({
+        reportDate: date,
+        confirmed: _.sumBy(data, "confirmed"),
+        deaths: _.sumBy(data, "deaths")
+      }))
+      .value();
+    // filtered = _.groupBy(filtered, f => f.country);
+    // _.forEach(filtered, (value, key) => {
+    //   filtered[key] = _.groupBy(filtered[key], f => f.reportDate);
+    // });
+    // const aa = filtered;
+
     setCountryTimeLine(filtered);
   };
 

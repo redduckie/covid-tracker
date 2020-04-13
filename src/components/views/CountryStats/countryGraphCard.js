@@ -38,14 +38,14 @@ const CountryGraphCard = ({ title, data, xAxis, yAxis }) => {
                 <Line
                   type="monotone"
                   dataKey="confirmed"
-                  stroke="#ff7300"
+                  stroke="#387908"
                   yAxisId="left"
                   dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="deaths"
-                  stroke="#387908"
+                  stroke="#ff7300"
                   yAxisId="right"
                   dot={false}
                 />

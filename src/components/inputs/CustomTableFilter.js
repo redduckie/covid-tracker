@@ -30,7 +30,7 @@ const CustomTableFilter = (filterType, data) => {
     }) => (
       <div style={{ padding: 8 }}>
         <ComboboxInput
-          mode="default"
+          mode="multiple"
           onFocus={() => getComboData(dataIndex)}
           onChange={(name, value) => {
             setSelectedKeys(value ? [value] : []);
@@ -62,13 +62,16 @@ const CustomTableFilter = (filterType, data) => {
     filterIcon: filtered => (
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
-    onFilter: (value, record) => record[dataIndex].indexOf(value[0]) === 0,
+    onFilter: (value, record) => {
+      return _.map(value, v => {
+        return record[dataIndex].indexOf(v) === 0;
+      });
+    },
     onFilterDropdownVisibleChange: visible => {
       // if (visible) {
       //   setTimeout(() => /*this.searchInput.select()*/);
       // }
-    },
-    render: text => text
+    }
   });
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {

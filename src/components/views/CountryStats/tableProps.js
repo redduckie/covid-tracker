@@ -7,7 +7,7 @@ export const countryColumns = onClick => [
   {
     title: "Country",
     dataIndex: "country",
-    filterType: "checked",
+    filterType: "custom",
     width: "40%",
     render: (text, record) => {
       return (
