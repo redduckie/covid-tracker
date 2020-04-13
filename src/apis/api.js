@@ -1,20 +1,17 @@
 import axios from "axios";
 import _ from "lodash";
-import moment from 'moment';
-const request = require('request')
-const csv = require('csvtojson')
+import moment from "moment";
+const csv = require("csvtojson");
 
 const apiUrlBase = "https://corona.lmao.ninja";
 
-
 ///use this one for the map since it has most map values and little behind.. maybe only an hour or two
 export async function casesWithStatesJH() {
-  const resultData = [];
   const url =
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases.csv";
-  const result = await axios.get(url).then(response=>{
+  const result = await axios.get(url).then(response => {
     return convertToJson(response.data);
-  })
+  });
   return result;
 }
 
@@ -28,14 +25,14 @@ export async function get(url) {
     .catch(error => console.log(error));
 }
 
-async function convertToJson(csvString){
+async function convertToJson(csvString) {
   const jsonData = await csv({
     noheader: false,
     output: "json"
   })
     .fromString(csvString)
-    .then((csvRow) => {
-      return _.map(csvRow, r =>{
+    .then(csvRow => {
+      return _.map(csvRow, r => {
         return {
           country: r.Country_Region,
           confirmed: parseInt(r.Confirmed),
@@ -44,21 +41,24 @@ async function convertToJson(csvString){
           active: parseInt(r.Active),
           deltaConfirmed: parseInt(r.Delta_Confirmed),
           deltaRecovered: parseInt(r.deltaRecovered),
-          reportDate: moment(r.Report_Date_String).toLocaleString(),
+          reportDate: moment(r.Report_Date_String).format("MMMM DD"),
           iso3: r.iso3
-        }
-      })
+        };
+      });
     });
-    return jsonData
+  return jsonData;
 }
 
 //this one from JH for timeline data
 export async function countryTimeLineApiJH() {
-  const url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases_time.csv`
-  const result = await axios.get(url).then(response => {
-    return convertToJson(response.data);
-  }, err => {
-    return err;
-  });
+  const url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases_time.csv`;
+  const result = await axios.get(url).then(
+    response => {
+      return convertToJson(response.data);
+    },
+    err => {
+      return err;
+    }
+  );
   return result;
 }

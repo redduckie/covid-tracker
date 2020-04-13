@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { get, countryTimeLineApi, countryTimeLineApiJH } from "../../../apis/api";
+import {
+  get,
+  countryTimeLineApi,
+  countryTimeLineApiJH
+} from "../../../apis/api";
 import _ from "lodash";
 import TableInput from "../../inputs/TableInput";
 import { Row, Col } from "antd";
@@ -36,20 +40,19 @@ const CountryStats = props => {
     });
   }
 
-  const getTimeLineData = async (country) => {
+  const getTimeLineData = async country => {
     const data = await countryTimeLineApiJH();
-    const filtered = _.filter(data, f => f.iso3 === country)
+    const filtered = _.filter(data, f => f.iso3 === country);
     setCountryTimeLine(filtered);
-  }
+  };
 
-
-  const rowClick = (e) => {
+  const rowClick = e => {
     const selectedCountry = e.target.text;
-    const countryIso3 = allCases.find(f => f.country === selectedCountry).iso3
+    const countryIso3 = allCases.find(f => f.country === selectedCountry).iso3;
     setSelectedCountry(selectedCountry);
 
-    getTimeLineData(countryIso3)
-  }
+    getTimeLineData(countryIso3);
+  };
 
   return (
     <div>
@@ -61,17 +64,25 @@ const CountryStats = props => {
               rowKey={"country"}
               data={allCases}
               summary={countrySummary}
-              pagination={false}
+              pagination={true}
               size="small"
             />
           )}
         </Col>
-        {selectedCountry != "" && countryTimeLine.length > 0 &&
-          <Col xs={24} sm={24} md={24} lg={12} xl={12} xl={12}>
-            <CountryGraphCard title={selectedCountry} data={countryTimeLine} xAxis={'reportDate'} yAxis={[{ name: 'confirmed', color: 'green' },
-            { name: 'deaths', color: "red" }, 
-            { name: 'recovered', color:"blue"}]} />
-          </Col>}
+        {selectedCountry !== "" && countryTimeLine.length > 0 && (
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+            <CountryGraphCard
+              title={selectedCountry}
+              data={countryTimeLine}
+              xAxis={"reportDate"}
+              yAxis={[
+                { name: "confirmed", color: "green" },
+                { name: "deaths", color: "red" },
+                { name: "recovered", color: "blue" }
+              ]}
+            />
+          </Col>
+        )}
       </Row>
     </div>
   );
