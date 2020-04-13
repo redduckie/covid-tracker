@@ -37,9 +37,9 @@ const CountryStats = props => {
   }
 
   const getTimeLineData = async (country) => {
-   const data = await countryTimeLineApiJH();
-   const filtered = _.filter(data, f=> f.iso3 === country)
-   setCountryTimeLine(filtered);
+    const data = await countryTimeLineApiJH();
+    const filtered = _.filter(data, f => f.iso3 === country)
+    setCountryTimeLine(filtered);
   }
 
 
@@ -66,9 +66,11 @@ const CountryStats = props => {
             />
           )}
         </Col>
-        {selectedCountry != "" &&
+        {selectedCountry != "" && countryTimeLine.length > 0 &&
           <Col xs={24} sm={24} md={24} lg={12} xl={12} xl={12}>
-            <CountryGraphCard title={selectedCountry} />
+            <CountryGraphCard title={selectedCountry} data={countryTimeLine} xAxis={'reportDate'} yAxis={[{ name: 'confirmed', color: 'green' },
+            { name: 'deaths', color: "red" }, 
+            { name: 'recovered', color:"blue"}]} />
           </Col>}
       </Row>
     </div>

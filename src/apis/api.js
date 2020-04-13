@@ -1,5 +1,6 @@
 import axios from "axios";
 import _ from "lodash";
+import moment from 'moment';
 const request = require('request')
 const csv = require('csvtojson')
 
@@ -11,9 +12,10 @@ export async function casesWithStatesJH() {
   const resultData = [];
   const url =
     "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases.csv";
-  const result = await axios.get(url);
-  let { data } = result;
-  // return resultData.push(csvToJson.getJsonFormat(data));
+  const result = await axios.get(url).then(response=>{
+    return convertToJson(response.data);
+  })
+  return result;
 }
 
 //this one for the countries table. up to date and working perfectly
@@ -33,7 +35,19 @@ async function convertToJson(csvString){
   })
     .fromString(csvString)
     .then((csvRow) => {
-      return csvRow;
+      return _.map(csvRow, r =>{
+        return {
+          country: r.Country_Region,
+          confirmed: parseInt(r.Confirmed),
+          deaths: parseInt(r.Deaths),
+          recovered: parseInt(r.Recovered),
+          active: parseInt(r.Active),
+          deltaConfirmed: parseInt(r.Delta_Confirmed),
+          deltaRecovered: parseInt(r.deltaRecovered),
+          reportDate: moment(r.Report_Date_String).toLocaleString(),
+          iso3: r.iso3
+        }
+      })
     });
     return jsonData
 }
@@ -42,7 +56,7 @@ async function convertToJson(csvString){
 export async function countryTimeLineApiJH() {
   const url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases_time.csv`
   const result = await axios.get(url).then(response => {
-    return convertToJson(response.data.toString());
+    return convertToJson(response.data);
   }, err => {
     return err;
   });
