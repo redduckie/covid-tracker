@@ -18,17 +18,11 @@
   padding: 8px;
 }
 
-/* .ant-table tfoot,
-.ant-table tfoot th,
-.ant-table tfoot td {
+table tfoot,
+table tfoot th,
+table tfoot td {
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
-  background: #666;
-  color: #fff;
   z-index: 4;
 }
-
-tfoot th:first-child {
-  z-index: 5;
-} */

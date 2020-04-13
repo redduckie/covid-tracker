@@ -60,12 +60,14 @@ const CountryStats = props => {
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
           {allCases.length > 0 && (
             <TableInput
+              height={"100vh"}
               columns={countryColumns(rowClick)}
               rowKey={"country"}
               data={allCases}
               summary={countrySummary}
-              pagination={true}
               size="small"
+              scroll={{ y: "calc(100vh - 300px)" }}
+              pagination={{ pageSize: 250 }}
             />
           )}
         </Col>

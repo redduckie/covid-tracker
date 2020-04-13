@@ -3,7 +3,7 @@ import { Table } from "antd";
 import _ from "lodash";
 import CustomTableFilter from "./CustomTableFilter";
 
-const TableInput = ({ data, columns, summary, pagination, size }) => {
+const TableInput = ({ data, columns, summary, pagination, size, scroll }) => {
   const columnsMod = () => {
     const filters = _.map(columns, col => {
       const filter = CustomTableFilter(col["filterType"], data)(
@@ -20,7 +20,7 @@ const TableInput = ({ data, columns, summary, pagination, size }) => {
       size={size}
       columns={columnsMod()}
       dataSource={data}
-      scroll={{ x: true }}
+      scroll={{ ...scroll, x: true }}
       summary={summary}
       pagination={pagination}
       // scroll={{ x: 1500, y: 300 }}
