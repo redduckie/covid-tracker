@@ -17,7 +17,7 @@ export const countryColumns = onClick => [
             src={record.flag}
             alt="flag"
           />{" "}
-          <a onClick = {(e)=> onClick(e)}>{text}</a>
+          <a onClick={e => onClick(e)}>{text}</a>
         </span>
       );
     }
