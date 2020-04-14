@@ -38,7 +38,7 @@ const CountryGraphCard = ({ data, title }) => {
         Id: "left",
         orientation: "left",
         type: "monotone",
-        stroke: "#387908",
+        stroke: "red",
         dot: false
       }
     ]
@@ -51,14 +51,27 @@ const CountryGraphCard = ({ data, title }) => {
           <Card
             title={`${title} Active and confirmed cases`}
             bordered={true}
-            style={{ marginLeft: 20 }}
+            style={{
+              margin: 5
+            }}
+            headStyle={{
+              backgroundColor: "lightgrey",
+              border: 1
+            }}
+            bodyStyle={{ backgroundColor: "rgba(255, 0, 0, 0.2)", border: 1 }}
           >
             <LineChartComponent {...ActiveConfirmedProps} />
           </Card>
           <Card
             title={`${title} deaths`}
             bordered={true}
-            style={{ marginLeft: 20 }}
+            style={{ marginLeft: 5, marginTop: 10 }}
+            headStyle={{
+              color: "red",
+              backgroundColor: "lightgrey",
+              border: 1
+            }}
+            bodyStyle={{ backgroundColor: "rgba(255, 0, 0, 0.2)", border: 1 }}
           >
             <LineChartComponent {...deathsProps} />
           </Card>
