@@ -61,7 +61,7 @@ const CountryStats = props => {
 
   const rowClick = e => {
     const selectedCountry = allCases.find(f => f.country === e.target.text).iso2;
-    setSelectedCountry(selectedCountry);
+    setSelectedCountry(e.target.text);
     getTimeLineData(selectedCountry);
   };
 
