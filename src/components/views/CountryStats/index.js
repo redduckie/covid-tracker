@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
-  get,
-  countryTimeLineApi,
-  countryTimeLineApiJH,
   getCaseTable,
-  getCountryHistorical
+  getCountryHistorical,
+  getCountriesIso2
 } from "../../../apis/api";
 import _ from "lodash";
 import TableInput from "../../inputs/TableInput";
@@ -23,35 +21,50 @@ const CountryStats = props => {
   }, []);
 
   async function updateCases() {
-    const cases = await getCaseTable();
-    const data = _.map(cases, c => ({
-      country: c.country,
-      active: c.cases.active,
-      total: c.cases.total,
-      new: c.cases.new,
-      recovered: c.cases.recovered,
-      deaths: c.deaths.total,
-      newDeaths: c.deaths.new,
-      tests: c.tests.total
-    }));
+    const cases = await getCaseTable()
+    const data = _.map(cases, r => {
+      return {
+        country: r.country,
+        active: r.active,
+        total: r.cases,
+        new: r.todayCases,
+        recovered: r.recovered,
+        deaths: r.deaths,
+        newDeath: r.todayDeaths,
+        tests: r.tests,
+        flag: r.countryInfo.flag,
+        iso2: r.countryInfo.iso2,
+        iso3: r.countryInfo.iso3
+      };
+    });
     setAllCases(data);
   }
 
   const getTimeLineData = async country => {
-    const data = await getCountryHistorical(country);
-    const filtered = _.map(_.orderBy(data), d => ({
-      date: d.time,
-      reportDate: moment(d.time).format("MMM DD"),
-      confirmed: d.cases.total,
-      deaths: d.deaths.total,
-      recovered: d.cases.recovered,
-      active: d.cases.active
-    }));
-    setCountryTimeLine(_.orderBy(filtered, ["date"], ["asc"]));
+    const historicalData = await getCountryHistorical(country);
+
+    const d = _.orderBy(_.map(historicalData, h=> ({
+      cases: h.Cases,
+      status: h.Status,
+      date: h.Date,
+      confirmed: h.Status === "confirmed" ? h.Cases : null,
+      deaths: h.Status == "deaths" ? h.Cases : null,
+      recovered: h.Recovered == "recovered"? h.Cases : null  
+    })),'date');
+    // const data = await getCountryHistorical(country);
+    // const filtered = _.map(_.orderBy(data), d => ({
+    //   date: d.time,
+    //   reportDate: moment(d.time).format("MMM DD"),
+    //   confirmed: d.cases.total,
+    //   deaths: d.deaths.total,
+    //   recovered: d.cases.recovered,
+    //   active: d.cases.active
+    // }));
+    // setCountryTimeLine(_.orderBy(filtered, ["date"], ["asc"]));
   };
 
   const rowClick = e => {
-    const selectedCountry = e.target.text;
+    const selectedCountry = allCases.find(f => f.country === e.target.text).iso2;
     setSelectedCountry(selectedCountry);
     getTimeLineData(selectedCountry);
   };

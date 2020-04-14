@@ -12,11 +12,11 @@ export const countryColumns = onClick => [
     render: (text, record) => {
       return (
         <span>
-          {/* <img
-            style={{ maxWidth: "40%", maxHeight: "30%" }}
+          <img
+            style={{ maxWidth: "30%", maxHeight: "20%" }}
             src={record.flag}
             alt="flag"
-          />{" "} */}
+          />{" "}
           <a onClick={e => onClick(e)}>{text}</a>
         </span>
       );
