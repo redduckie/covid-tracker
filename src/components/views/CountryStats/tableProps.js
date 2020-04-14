@@ -8,20 +8,20 @@ export const countryColumns = onClick => [
     title: "Country",
     dataIndex: "country",
     filterType: "custom",
-    width: "40%",
+    // width: "40%",
     render: (text, record) => {
       return (
         <span>
-          <img
+          {/* <img
             style={{ maxWidth: "40%", maxHeight: "30%" }}
             src={record.flag}
             alt="flag"
-          />{" "}
+          />{" "} */}
           <a onClick={e => onClick(e)}>{text}</a>
         </span>
       );
     }
-  },
+   },
   {
     title: "Confirmed Cases",
     dataIndex: "total",
@@ -73,47 +73,47 @@ export const countryColumns = onClick => [
   }
 ];
 
-export const countrySummary = pageData => {
-  let totalConfirmed = 0;
-  let totalActive = 0;
-  let totalRecovered = 0;
-  let totalDeaths = 0;
+// export const countrySummary = pageData => {
+//   let totalConfirmed = 0;
+//   let totalActive = 0;
+//   let totalRecovered = 0;
+//   let totalDeaths = 0;
 
-  _.map(pageData, ({ total, active, recovered, deaths, country }) => {
-    if (country !== "All") {
-      totalConfirmed += total ? total : 0;
-      totalActive += active ? active : 0;
-      totalDeaths += deaths ? deaths : 0;
-      totalRecovered += recovered ? recovered : 0;
-    }
-  });
-  return (
-    <>
-      <tr>
-        <th>Total</th>
-        <td>
-          <Text>
-            <b>{totalConfirmed}</b>
-          </Text>
-        </td>
-        <td />
-        <td>
-          <Text>
-            <b>{totalActive}</b>
-          </Text>
-        </td>
-        <td>
-          <Text>
-            <b>{totalDeaths}</b>
-          </Text>
-        </td>
-        <td />
-        <td>
-          <Text>
-            <b>{totalRecovered}</b>
-          </Text>
-        </td>
-      </tr>
-    </>
-  );
-};
+//   _.map(pageData, ({ total, active, recovered, deaths, country }) => {
+//     if (country !== "All") {
+//       totalConfirmed += total ? total : 0;
+//       totalActive += active ? active : 0;
+//       totalDeaths += deaths ? deaths : 0;
+//       totalRecovered += recovered ? recovered : 0;
+//     }
+//   });
+//   return (
+//     <>
+//       <tr>
+//         <th>Total</th>
+//         <td>
+//           <Text>
+//             <b>{totalConfirmed}</b>
+//           </Text>
+//         </td>
+//         <td />
+//         <td>
+//           <Text>
+//             <b>{totalActive}</b>
+//           </Text>
+//         </td>
+//         <td>
+//           <Text>
+//             <b>{totalDeaths}</b>
+//           </Text>
+//         </td>
+//         <td />
+//         <td>
+//           <Text>
+//             <b>{totalRecovered}</b>
+//           </Text>
+//         </td>
+//       </tr>
+//     </>
+//   );
+// };

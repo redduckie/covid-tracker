@@ -5,15 +5,6 @@ const csv = require("csvtojson");
 
 const apiUrlBase = "https://corona.lmao.ninja";
 
-///use this one for the map since it has most map values and little behind.. maybe only an hour or two
-export async function casesWithStatesJH() {
-  const url =
-    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases.csv";
-  const result = await axios.get(url).then(response => {
-    return convertToJson(response.data);
-  });
-  return result;
-}
 
 //this one for the countries table. up to date and working perfectly
 export async function get(url) {
@@ -50,7 +41,7 @@ async function convertToJson(csvString) {
   return jsonData;
 }
 
-//this one from JH for timeline data
+// -- effed up on us data this one from JH for timeline data
 export async function countryTimeLineApiJH() {
   const url = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/web-data/data/cases_time.csv`;
   const result = await axios.get(url).then(
@@ -62,4 +53,23 @@ export async function countryTimeLineApiJH() {
     }
   );
   return result;
+}
+
+////// covid19-3 data rapid
+export async function getCaseTable() {
+  const url = "https://covid-193.p.rapidapi.com/statistics";
+  return await axios.get(url, {
+    headers:{"x-rapidapi-key":"3832241aa1msh5ad3681e8bb076fp132d80jsn9504533d3dac"}
+  }).then(
+    response=> {return response.data.response}
+  )
+}
+
+export async function getCountryHistorical(country) {
+  const url = `https://covid-193.p.rapidapi.com/history?country=${country}`;
+  return await axios.get(url, {
+    headers:{"x-rapidapi-key":"3832241aa1msh5ad3681e8bb076fp132d80jsn9504533d3dac"}
+  }).then(
+    response=> {return response.data.response}
+  )
 }
