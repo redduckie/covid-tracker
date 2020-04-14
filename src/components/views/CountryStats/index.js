@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   getCaseTable,
-  getCountryHistorical,
-  getCountriesIso2
+  getCountryHistorical
 } from "../../../apis/api";
 import _ from "lodash";
 import TableInput from "../../inputs/TableInput";
@@ -43,24 +42,21 @@ const CountryStats = props => {
   const getTimeLineData = async country => {
     const historicalData = await getCountryHistorical(country);
 
-    const d = _.orderBy(_.map(historicalData, h=> ({
+    const data = _(historicalData).map(h => ({
       cases: h.Cases,
       status: h.Status,
       date: h.Date,
       confirmed: h.Status === "confirmed" ? h.Cases : null,
       deaths: h.Status == "deaths" ? h.Cases : null,
-      recovered: h.Recovered == "recovered"? h.Cases : null  
-    })),'date');
-    // const data = await getCountryHistorical(country);
-    // const filtered = _.map(_.orderBy(data), d => ({
-    //   date: d.time,
-    //   reportDate: moment(d.time).format("MMM DD"),
-    //   confirmed: d.cases.total,
-    //   deaths: d.deaths.total,
-    //   recovered: d.cases.recovered,
-    //   active: d.cases.active
-    // }));
-    // setCountryTimeLine(_.orderBy(filtered, ["date"], ["asc"]));
+      recovered: h.Status == "recovered" ? h.Cases : null
+    })).orderBy('date').groupBy('date').map((casesData, date) => ({
+      reportDate: moment(date).format("MMM DD"),
+      confirmed: _.sumBy(casesData, 'confirmed'),
+      deaths: _.sumBy(casesData, 'deaths'),
+      recovered: _.sumBy(casesData, 'recovered'),
+      active: _.sumBy(casesData, 'confirmed') - _.sumBy(casesData, 'recovered') - _.sumBy(casesData, 'deaths')
+    })).value();
+    setCountryTimeLine(data);
   };
 
   const rowClick = e => {
