@@ -22,6 +22,8 @@ const csv = require("csvtojson");
 //   )
 // }
 
+
+//used for the table
 export async function getCaseTable(yesterday) {
   return await axios.get(`https://corona.lmao.ninja/v2/countries?sort=cases&yesterday=${yesterday.toString()}`)
     .then(res => res.data)
@@ -30,6 +32,7 @@ export async function getCaseTable(yesterday) {
 export async function getCountriesIso2() {
   return await axios.get("https://api.covid19api.com/countries").then(res => res.data);
 }
+//used for the charts next to table
 export async function getCountryHistorical(countryIso2) {
   
     const recovered = await axios.get(`https://api.covid19api.com/total/country/${countryIso2}/status/recovered`).then(res=> res.data);
