@@ -53,6 +53,7 @@ const CountryStats = props => {
       reportDate: moment(date).format("MMM DD"),
       confirmed: _.sumBy(casesData, 'confirmed'),
       deaths: _.sumBy(casesData, 'deaths'),
+      deathPercent: (_.sumBy(casesData, "deaths") / _.sumBy(casesData, "confirmed") * 100),
       recovered: _.sumBy(casesData, 'recovered'),
       active: _.sumBy(casesData, 'confirmed') - _.sumBy(casesData, 'recovered') - _.sumBy(casesData, 'deaths')
     })).value();
@@ -68,11 +69,11 @@ const CountryStats = props => {
   return (
     <div>
       <Row>
-        <Col lg={1}><Button name="today" type={yesterday ? "default" : "primary"} onClick={(e) => { setYesterday(false); updateCases(false); }}>Today</Button></Col>
-        <Col lg={1}><Button name="yesterday" type={yesterday ? "primary" : "default"} onClick={(e) => { setYesterday(true); updateCases(true); }}>Yesterday</Button></Col>
+        <Col xs={5} lg={1}><Button name="today" type={yesterday ? "default" : "primary"} onClick={(e) => { setYesterday(false); updateCases(false); }}>Today</Button></Col>
+        <Col xs={5} lg={1}><Button name="yesterday" type={yesterday ? "primary" : "default"} onClick={(e) => { setYesterday(true); updateCases(true); }}>Yesterday</Button></Col>
       </Row>
       <Row>
-        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+        <Col  lg={15} xl={15} xxl={15}>
           {allCases.length > 0 && (
             <TableInput
               height={"100vh"}
@@ -86,7 +87,7 @@ const CountryStats = props => {
           )}
         </Col>
         {selectedCountry !== "" && countryTimeLine.length > 0 && (
-          <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+          <Col xs={24} sm={24} md={24} lg={9} xl={9} xxl={9}>
             <CountryGraphCard title={selectedCountry} data={countryTimeLine} />
           </Col>
         )}

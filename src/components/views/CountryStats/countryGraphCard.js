@@ -40,6 +40,14 @@ const CountryGraphCard = ({ data, title }) => {
         type: "monotone",
         stroke: "red",
         dot: false
+      },
+      {
+        dataKey: "deathPercent",
+        Id: "right",
+        orientation: "right",
+        type: "monotone",
+        stroke: "orange",
+        dot: false
       }
     ]
   };

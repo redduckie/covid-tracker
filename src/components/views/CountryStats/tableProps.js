@@ -8,7 +8,6 @@ export const countryColumns = onClick => [
     title: "Country",
     dataIndex: "country",
     filterType: "custom",
-    // width: "40%",
     render: (text, record) => {
       return (
         <span>
@@ -21,22 +20,32 @@ export const countryColumns = onClick => [
         </span>
       );
     }
-   },
+  },
   {
     title: "Confirmed Cases",
+    width: "200px",
     dataIndex: "total",
     defaultSortOrder: "descend",
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    },
     sorter: (a, b) => a.total - b.total
   },
   {
     title: "New",
     dataIndex: "new",
-    sorter: (a, b) => a.new - b.new
+    sorter: (a, b) => a.new - b.new,
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    }
   },
   {
     title: "Active Cases",
     dataIndex: "active",
-    sorter: (a, b) => a.active - b.active
+    sorter: (a, b) => a.active - b.active,
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    }
     // render: (text, row) => (
     //   <div>{row["total"] - row["deaths"] - row["recovered"]}</div>
     // )
@@ -52,24 +61,33 @@ export const countryColumns = onClick => [
         props: {
           style: { backgroundColor: "red", color: "white" }
         },
-        children: <div>{text}</div>
+        children: <span>{new Intl.NumberFormat("en").format(text)}</span>
       };
     }
   },
   {
     title: "New Deaths",
     dataIndex: "newDeath",
-    sorter: (a, b) => a.newDeath - b.newDeath
+    sorter: (a, b) => a.newDeath - b.newDeath,
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    }
   },
   {
     title: "Recovered",
     dataIndex: "recovered",
-    sorter: (a, b) => a.recovered - b.recovered
+    sorter: (a, b) => a.recovered - b.recovered,
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    }
   },
   {
     title: "Total Tests",
     dataIndex: "tests",
-    sorter: (a, b) => a.tests - b.tests
+    sorter: (a, b) => a.tests - b.tests,
+    render: (text) => {
+      return <span>{new Intl.NumberFormat("en").format(text)}</span>
+    }
   }
 ];
 

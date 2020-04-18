@@ -13,7 +13,7 @@ import {
 
 const LineChartComponent = ({ title, data, xAxis, yAxis }) => {
   return (
-    <ResponsiveContainer aspect={1.6}>
+    <ResponsiveContainer aspect={2.3}>
       <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey={xAxis} />
