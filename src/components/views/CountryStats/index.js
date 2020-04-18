@@ -5,7 +5,7 @@ import {
 } from "../../../apis/api";
 import _ from "lodash";
 import TableInput from "../../inputs/TableInput";
-import { Row, Col } from "antd";
+import { Row, Col, Button } from "antd";
 import { countryColumns } from "./tableProps";
 import CountryGraphCard from "./countryGraphCard";
 import moment from "moment";
@@ -14,13 +14,13 @@ const CountryStats = props => {
   const [allCases, setAllCases] = useState([]);
   const [countryTimeLine, setCountryTimeLine] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
-
-  useEffect(() => {
-    updateCases();
+  const [yesterday, setYesterday] = useState(false);
+  useEffect((props) => {
+    updateCases(yesterday);
   }, []);
 
-  async function updateCases() {
-    const cases = await getCaseTable()
+  async function updateCases(yesterday) {
+    const cases = await getCaseTable(yesterday)
     const data = _.map(cases, r => {
       return {
         country: r.country,
@@ -67,6 +67,10 @@ const CountryStats = props => {
 
   return (
     <div>
+      <Row>
+        <Col lg={1}><Button name="today" type={yesterday ? "default" : "primary"} onClick={(e) => { setYesterday(false); updateCases(false); }}>Today</Button></Col>
+        <Col lg={1}><Button name="yesterday" type={yesterday ? "primary" : "default"} onClick={(e) => { setYesterday(true); updateCases(true); }}>Yesterday</Button></Col>
+      </Row>
       <Row>
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
           {allCases.length > 0 && (

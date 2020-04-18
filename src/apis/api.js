@@ -22,8 +22,8 @@ const csv = require("csvtojson");
 //   )
 // }
 
-export async function getCaseTable() {
-  return await axios.get("https://corona.lmao.ninja/countries?sort=cases")
+export async function getCaseTable(yesterday) {
+  return await axios.get(`https://corona.lmao.ninja/v2/countries?sort=cases&yesterday=${yesterday.toString()}`)
     .then(res => res.data)
 }
 
