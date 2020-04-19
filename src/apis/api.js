@@ -1,6 +1,4 @@
 import axios from "axios";
-import _ from "lodash";
-import moment from "moment";
 const csv = require("csvtojson");
 
 ////// covid19-3 data rapid
@@ -13,18 +11,9 @@ const csv = require("csvtojson");
 //   )
 // }
 
-// export async function getCountryHistorical(country) {
-//   const url = `https://covid-193.p.rapidapi.com/history?country=${country}`;
-//   return await axios.get(url, {
-//     headers:{"x-rapidapi-key":"3832241aa1msh5ad3681e8bb076fp132d80jsn9504533d3dac"}
-//   }).then(
-//     response=> {return response.data.response}
-//   )
-// }
-
 
 //used for the table
-export async function getCaseTable(yesterday) {
+export async function getCountryCases(yesterday) {
   return await axios.get(`https://corona.lmao.ninja/v2/countries?sort=cases&yesterday=${yesterday.toString()}`)
     .then(res => res.data)
 }

@@ -1,37 +1,22 @@
-import React, {setState, useState, useEffect} from 'react';
+import React, { useEffect, useCallback, useReducer } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { getCountryCasesData } from '../../../actions/cases-data-actions'
+import { Button } from 'antd';
 
-const InfectionMap = () =>{
-  [worldCases, setWorldCases]= useState([]);
+const InfectionMap = (props) => {
 
-  useEffect((props)=>{
-    getCases
+  const { countryCases } = useSelector(state => ({
+    ...state.casesReducer
+  }));
+  const dispatch = useDispatch();
+  useEffect((props) => {
+    dispatch(getCountryCasesData(false));
   },[])
+  return (
 
-
-  async function getCases() {
-    const cases = await getCaseTable(false)
-    const data = _.map(cases, r => {
-      return {
-        country: r.country,
-        active: r.active,
-        total: r.cases,
-        new: r.todayCases,
-        recovered: r.recovered,
-        deaths: r.deaths,
-        newDeath: r.todayDeaths,
-        tests: r.tests,
-        flag: r.countryInfo.flag,
-        iso2: r.countryInfo.iso2,
-        iso3: r.countryInfo.iso3,
-        lat: r.countryInfo.lat,
-        long:r.countryInfo.long
-      };
-    });
-    setWorldCases(data);
-  }
-
-  return(
-    <></>
+    <>
+      {countryCases && <div>{countryCases[0].country}</div>}
+    </>
   )
 }
 

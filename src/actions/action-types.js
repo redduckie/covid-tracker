@@ -1,0 +1,4 @@
+export const types ={
+    COUNTRIES:"COUNTRIES_SUCCESS",
+    HISTORICAL:"HISTORICAL_SUCCESS"
+}
